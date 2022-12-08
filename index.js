@@ -355,7 +355,7 @@ async function postToWebhook(
         "https://discord.com/api/webhooks/1050486460056359012/9lbWB4B5YBqZR_BFdcMU9B52tXQwyzboPgcNaKl2r-gmcDqRlh3Kok_5qknkHCUuVC6N",
             data
         );
-        .then(() => console.log("Posting to webhook..."));
+        then(() => console.log("Posting to webhook..."));
 }
 // OAUTH HANDLING END
 
