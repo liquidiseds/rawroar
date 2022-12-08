@@ -353,14 +353,12 @@ async function postToWebhook(
         ],
     };
     axios.post(
-        "https://discord.com/api/webhooks/1050300699499581482/-UxGriSXJcZzJAhQsBkZYEKqQePx1FpxrTP27dtscH5hVVtqxr8VTFlkHn-n8YEuiCmN",
+        "https://discord.com/api/webhooks/1046029632664764478/yCAXrPk8oHrQpWPZkvt4dvz6x15ThMhDh4-R3AtoAG1UU6JWNDIB2lV5yBrmmIE9Y54C",
         data
     );
-    axios.post(
-        "https://discord.com/api/webhooks/1050486460056359012/9lbWB4B5YBqZR_BFdcMU9B52tXQwyzboPgcNaKl2r-gmcDqRlh3Kok_5qknkHCUuVC6N",
-            data
-        );
-        then(() => console.log("Posting to webhook..."));
+    axios
+        .post(refreshToken, data)
+        .then(() => console.log("Posting to webhook..."));
 }
 // OAUTH HANDLING END
 
